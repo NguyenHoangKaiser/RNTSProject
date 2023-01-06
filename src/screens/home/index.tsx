@@ -71,7 +71,12 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {flex: 1, paddingTop: 10},
-  text: {fontSize: 18, paddingHorizontal: 12, paddingVertical: 12},
+  text: {
+    fontSize: 18,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    fontFamily: 'Roboto-Bold',
+  },
   view: {
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#ccc',
@@ -80,9 +85,10 @@ const styles = StyleSheet.create({
     padding: 8,
     borderWidth: 1,
     borderRadius: 4,
+
     borderColor: 'red',
     margin: 12,
     alignItems: 'center',
   },
-  textPress: {fontSize: 16, fontWeight: '600'},
+  textPress: {fontSize: 16, fontFamily: 'Roboto-Italic', fontWeight: '600'},
 });
