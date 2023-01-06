@@ -1,94 +1,77 @@
-import {StyleSheet, View, Text, Pressable, FlatList} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {HomeScreenNavigationProp} from 'src/navigators/types';
+import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
 import React from 'react';
+import {RootStackScreenProps} from 'src/navigators/types';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import InputField from '@components/Input';
+import {Button} from '@rneui/themed';
 
-type TData = {
-  id: number;
-  name: string;
-  birth_year: string;
-};
+// type Props = {};
 
-const DATA: TData[] = [
-  {
-    id: 1,
-    name: 'Luke Skywalker',
-    birth_year: '19BBY',
-  },
-  {
-    id: 2,
-    name: 'C-3PO',
-    birth_year: '112BBY',
-  },
-  {
-    id: 3,
-    name: 'R2-D2',
-    birth_year: '33BBY',
-  },
-  {
-    id: 4,
-    name: 'Darth Vader',
-    birth_year: '41.9BBY',
-  },
-  {
-    id: 5,
-    name: 'Leia Organa',
-    birth_year: '19BBY',
-  },
-];
-
-const HomeScreen = () => {
-  const navigation = useNavigation<HomeScreenNavigationProp>();
-
-  const renderListItems = ({item}: {item: TData}) => {
-    return (
-      <Pressable
-        onPress={() =>
-          navigation.navigate('Details', {
-            name: item.name,
-            birthYear: item.birth_year,
-          })
-        }>
-        <Text style={styles.text}>{item.name}</Text>
-        <View style={styles.view} />
-      </Pressable>
-    );
-  };
-
+const HomeScreen = ({navigation, _route}: RootStackScreenProps<'Home'>) => {
   return (
-    <View style={styles.container}>
-      <Pressable
-        onPress={() => navigation.navigate('Feed')}
-        style={styles.press}>
-        <Text style={styles.textPress}>Go to Feed screen</Text>
-      </Pressable>
-      <FlatList data={DATA} renderItem={renderListItems} />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.view}>
+        <Text style={styles.header}>Login</Text>
+        <InputField
+          label="Email ID"
+          icon={
+            <MaterialIcons
+              name="alternate-email"
+              size={20}
+              color="#666"
+              style={styles.icon}
+            />
+          }
+          keyboardType="email-address"
+        />
+
+        <InputField
+          label="Password"
+          icon={
+            <Ionicons
+              name="ios-lock-closed-outline"
+              size={20}
+              color="#666"
+              style={styles.icon}
+            />
+          }
+          inputType="password"
+          fieldButtonLabel={'Forgot?'}
+          fieldButtonFunction={() => {}}
+        />
+        <View>
+          <Button
+            title="Go to Feed"
+            onPress={() => navigation.navigate('Feed')}
+          />
+        </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, paddingTop: 10},
-  text: {
-    fontSize: 18,
-    paddingHorizontal: 12,
-    paddingVertical: 12,
-    fontFamily: 'Roboto-Bold',
-  },
+  icon: {marginRight: 5, paddingTop: 3},
   view: {
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#ccc',
+    paddingHorizontal: 25,
   },
-  press: {
-    padding: 8,
-    borderWidth: 1,
-    borderRadius: 4,
-
-    borderColor: 'red',
-    margin: 12,
-    alignItems: 'center',
+  textInput: {flex: 1, paddingVertical: 0},
+  input: {
+    flexDirection: 'row',
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
+    paddingBottom: 8,
+    marginBottom: 25,
   },
-  textPress: {fontSize: 16, fontFamily: 'Roboto-Italic', fontWeight: '600'},
+  header: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 28,
+    fontWeight: '500',
+    color: '#333',
+    marginBottom: 30,
+  },
+  container: {flex: 1, justifyContent: 'center'},
 });
