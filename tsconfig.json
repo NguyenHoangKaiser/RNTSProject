@@ -5,6 +5,18 @@
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
     /* Completeness */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+    "baseUrl": "." /* Base directory to resolve non-absolute module names. */,
+    "paths": {
+      // "@src/*": ["src/*"],
+      "@navigators": ["./src/navigators"],
+      "@components": ["./src/components"],
+      "@components/*": ["./src/components/*"],
+      "@screens/*": ["./src/screens/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@config": ["./src/config"],
+      "@assets/*": ["./src/assets/*"],
+      "@reduxCore/*": ["./src/reduxCore/*"]
+    },
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */
   }
 }
