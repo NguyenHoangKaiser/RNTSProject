@@ -6,12 +6,29 @@ import {RootStackParamList} from './types';
 import HomeScreen from '@screens/home';
 import FeedScreen from '@screens/FeedScreen';
 // import DetailsScreen from '@screens/details';
+import HeaderButton from '@components/Header/HeaderButton';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const HomeStackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        // title: 'Feed', //Set Header Title
+        // headerStyle: {
+        //   backgroundColor: COLORS.PRIMARY, //Set Header color
+        // },
+        // headerTintColor: 'black', //Set Header tint color
+        headerTitleStyle: {
+          // fontWeight: 'bold', //Set Header text style
+          // color: 'green',
+          fontSize: 26,
+        },
+        headerTitleAlign: 'center',
+        headerShadowVisible: false,
+        headerLeft: () => <HeaderButton title="Back" />,
+      }}>
       <Stack.Screen
         name="Home"
         component={HomeScreen}

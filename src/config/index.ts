@@ -2,24 +2,19 @@ const BASE_URL = 'http:127.0.0.1:8012';
 const APP_NAME = 'My Theme';
 const URL_IMAGE = 'http:127.0.0.1:8012/assets';
 
-export type COLOR = {
-  PRIMARY: string;
-  SECONDARY: string;
-  BUTTON: string;
-  BUTTON_TEXT: string;
-  TEXT: string;
-  BACKGROUND: string;
-  HEADER_BG: string;
-};
-
-const COLORS: COLOR = {
-  PRIMARY: '#C6E2FF',
+const COLORS = {
+  PRIMARY: '#5DB075',
   SECONDARY: '#F4A460',
-  BUTTON: 'black',
   BUTTON_TEXT: '#fff',
-  TEXT: 'black',
-  BACKGROUND: '#E8E8E8',
-  HEADER_BG: 'black',
+  GRAY_BACKGROUND: '#f6f6f6',
+  GRAY_BORDER: '#bdbdbd',
 };
 
-export {APP_NAME, BASE_URL, URL_IMAGE, COLORS};
+const FONT = {
+  MEDIUM: 'Roboto-Medium',
+  ITALIC: 'Roboto-Italic',
+  REGULAR: 'Roboto-Regular',
+  BOLD: 'Roboto-Bold',
+};
+
+export {APP_NAME, BASE_URL, URL_IMAGE, COLORS, FONT};

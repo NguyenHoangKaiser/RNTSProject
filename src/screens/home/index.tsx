@@ -1,77 +1,82 @@
-import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
-import React from 'react';
-import {RootStackScreenProps} from 'src/navigators/types';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React, {useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {CustomScreenNavigationProp} from 'src/navigators/types';
+// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// import Ionicons from 'react-native-vector-icons/Ionicons';
+import Body from '@components/Body';
+import Container from '@components/Container';
+import Footer from '@components/Footer';
 import InputField from '@components/Input';
+import {COLORS, FONT} from '@config';
+import {useNavigation} from '@react-navigation/native';
 import {Button} from '@rneui/themed';
 
-// type Props = {};
-
-const HomeScreen = ({navigation, _route}: RootStackScreenProps<'Home'>) => {
+const HomeScreen = () => {
+  const [secure, setSecure] = useState(true);
+  const navigation = useNavigation<CustomScreenNavigationProp<'Feed'>>();
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.view}>
-        <Text style={styles.header}>Login</Text>
-        <InputField
-          label="Email ID"
-          icon={
-            <MaterialIcons
-              name="alternate-email"
-              size={20}
-              color="#666"
-              style={styles.icon}
-            />
-          }
-          keyboardType="email-address"
-        />
-
+    <Container>
+      <Body>
+        <Text style={styles.title}>Login</Text>
+        <InputField label="Email" keyboardType="email-address" />
         <InputField
           label="Password"
-          icon={
-            <Ionicons
-              name="ios-lock-closed-outline"
-              size={20}
-              color="#666"
-              style={styles.icon}
-            />
-          }
+          secure={secure}
           inputType="password"
-          fieldButtonLabel={'Forgot?'}
-          fieldButtonFunction={() => {}}
+          fieldButtonLabel={secure ? 'Show' : 'Hidden'}
+          fieldButtonFunction={() => {
+            setSecure(!secure);
+          }}
         />
-        <View>
-          <Button
-            title="Go to Feed"
-            onPress={() => navigation.navigate('Feed')}
-          />
-        </View>
-      </View>
-    </SafeAreaView>
+      </Body>
+      <Footer>
+        <Button
+          title="Log In"
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonTitle}
+          onPress={() =>
+            navigation.navigate('Feed', {
+              name: 'Bruh',
+            })
+          }
+        />
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Feed', {
+              name: 'bruh',
+            })
+          }>
+          <Text style={styles.textForgot}>Forgot your password?</Text>
+        </TouchableOpacity>
+      </Footer>
+    </Container>
   );
 };
 
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  icon: {marginRight: 5, paddingTop: 3},
-  view: {
-    paddingHorizontal: 25,
+  textForgot: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: COLORS.PRIMARY,
+    fontFamily: FONT.BOLD,
+    marginTop: 16,
   },
-  textInput: {flex: 1, paddingVertical: 0},
-  input: {
-    flexDirection: 'row',
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 1,
-    paddingBottom: 8,
-    marginBottom: 25,
+  buttonTitle: {fontWeight: 'bold', fontSize: 16},
+  button: {
+    backgroundColor: COLORS.PRIMARY,
+    borderWidth: 2,
+    borderColor: 'white',
+    borderRadius: 100,
   },
-  header: {
-    fontFamily: 'Roboto-Medium',
-    fontSize: 28,
+  title: {
+    fontFamily: FONT.MEDIUM,
+    fontSize: 30,
     fontWeight: '500',
-    color: '#333',
+    color: 'black',
     marginBottom: 30,
+    marginTop: 15,
+    textAlign: 'center',
   },
-  container: {flex: 1, justifyContent: 'center'},
 });
