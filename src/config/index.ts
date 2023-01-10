@@ -11,10 +11,10 @@ const COLORS = {
 };
 
 const FONT = {
-  MEDIUM: 'Roboto-Medium',
-  ITALIC: 'Roboto-Italic',
-  REGULAR: 'Roboto-Regular',
-  BOLD: 'Roboto-Bold',
+  MEDIUM: 'Inter-Medium',
+  ITALIC: 'Inter-Italic',
+  REGULAR: 'Inter-Regular',
+  BOLD: 'Inter-Bold',
 };
 
 export {APP_NAME, BASE_URL, URL_IMAGE, COLORS, FONT};
