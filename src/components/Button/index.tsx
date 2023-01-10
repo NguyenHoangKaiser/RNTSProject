@@ -1,7 +1,7 @@
-import {Text, TouchableOpacity} from 'react-native';
+import { COLORS } from '@config';
 import React from 'react';
-import {styles} from './styles';
-import {COLORS} from '@config';
+import { Text, TouchableOpacity } from 'react-native';
+import { styles } from './styles';
 
 type Props = {
   title: string;
@@ -9,13 +9,13 @@ type Props = {
   onPress?: () => void;
 };
 
-const CustomButton = ({title, bgColor, onPress}: Props) => {
+const CustomButton = ({ title, bgColor, onPress }: Props) => {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={[
         styles.container,
-        {backgroundColor: bgColor === '' ? COLORS.BUTTON : bgColor},
+        { backgroundColor: bgColor === '' ? COLORS.PRIMARY : bgColor },
       ]}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>

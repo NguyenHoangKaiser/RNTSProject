@@ -1,14 +1,15 @@
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import React from 'react';
 
 type Props = {
   children: React.ReactNode;
+  style?: ViewStyle;
 };
 
-const Body = ({children}: Props) => {
-  return <View style={styles.body}>{children}</View>;
+const Body = ({ children, style }: Props) => {
+  return <View style={[style, styles.body]}>{children}</View>;
 };
 
 export default Body;
 
-const styles = StyleSheet.create({body: {flex: 1}});
+const styles = StyleSheet.create({ body: { flex: 1 } });

@@ -17,4 +17,4 @@ const FONT = {
   BOLD: 'Inter-Bold',
 };
 
-export {APP_NAME, BASE_URL, URL_IMAGE, COLORS, FONT};
+export { APP_NAME, BASE_URL, URL_IMAGE, COLORS, FONT };

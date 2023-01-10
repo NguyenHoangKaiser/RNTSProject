@@ -1,5 +1,5 @@
 import React from 'react';
-import {ViewStyle} from 'react-native';
+import { ViewStyle } from 'react-native';
 
 interface Props {
   title?: string;

@@ -1,27 +1,27 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import React from 'react';
-import {BottomTabNavigatorParamList} from '../types';
-import HomeStackNavigator from '../HomeStack';
-import SettingsScreen from '../../screens/SettingScreen';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import HeaderButton from '@components/Header/HeaderButton';
-import {TouchableOpacity} from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
+import { TouchableOpacity } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import SettingsScreen from '../../screens/SettingScreen';
+import HomeStackNavigator from '../HomeStack';
+import { BottomTabNavigatorParamList } from '../types';
 
 const Tab = createBottomTabNavigator<BottomTabNavigatorParamList>();
 
 const BottomTabs = () => {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
+      screenOptions={({ route }) => ({
         headerTitleStyle: {
           fontSize: 26,
         },
         headerTitleAlign: 'center',
-        tabBarButton: props => <TouchableOpacity {...props} />,
+        tabBarButton: (props) => <TouchableOpacity {...props} />,
         headerShadowVisible: false,
         tabBarShowLabel: false,
         headerLeft: () => <HeaderButton title="Back" />,
-        tabBarIcon: ({focused, color, size}) => {
+        tabBarIcon: ({ focused, color, size }) => {
           let iconName = 'ios-information-circle';
 
           if (route.name === 'HomeStack') {
@@ -41,12 +41,12 @@ const BottomTabs = () => {
       <Tab.Screen
         name="HomeStack"
         component={HomeStackNavigator}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
-        initialParams={{title: 'Default'}} // default parameters before navigation
+        initialParams={{ title: 'Default' }} // default parameters before navigation
       />
     </Tab.Navigator>
   );

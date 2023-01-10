@@ -1,33 +1,54 @@
-import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { CustomScreenNavigationProp } from 'src/navigators/types';
-import Body from '@components/Body';
+import { Button as EButton, Icon } from '@rneui/themed';
+import React, { useState } from 'react';
 import Container from '@components/Container';
+import Body from '@components/Body';
 import Footer from '@components/Footer';
-import InputField from '@components/Input';
-import { COLORS, FONT } from '@config';
 import { useNavigation } from '@react-navigation/native';
-import { Button as EButton } from '@rneui/themed';
+import { CustomScreenNavigationProp } from 'src/navigators/types';
+import InputField from '@components/Input';
 import {
   useForm,
-  FormProvider,
   SubmitHandler,
   SubmitErrorHandler,
+  FormProvider,
 } from 'react-hook-form';
+import { COLORS, FONT } from '@config';
+import HeaderButton from '@components/Header/HeaderButton';
 
 type FormValues = {
+  name: string;
   email: string;
   password: string;
 };
 
-const HomeScreen = () => {
+const SignUpScreen = () => {
+  const navigation = useNavigation<CustomScreenNavigationProp<'SignUp'>>();
   const [secure, setSecure] = useState(true);
-  const navigation = useNavigation<CustomScreenNavigationProp<'Feed'>>();
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <Icon
+          name="close"
+          color="#bdbdbd"
+          onPress={() => navigation.goBack()}
+        />
+      ),
+      headerRight: () => (
+        <HeaderButton
+          title="Sign In"
+          onPress={() => navigation.navigate('Home')}
+        />
+      ),
+    });
+  }, [navigation]);
 
   const { ...methods } = useForm<FormValues>({ mode: 'onChange' });
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     // navigation.navigate('Feed', {name: data.email});
-    navigation.replace('Feed', { name: data.email });
+    console.log(data);
+    navigation.replace('Home');
     methods.reset();
   };
 
@@ -37,9 +58,15 @@ const HomeScreen = () => {
 
   return (
     <Container>
-      <Body>
+      <Body style={styles.body}>
         <FormProvider {...methods}>
-          <Text style={styles.title}>Login</Text>
+          <InputField
+            name="name"
+            rules={{
+              required: 'Name is required!',
+            }}
+            placeholder="Name"
+          />
           <InputField
             name="email"
             rules={{
@@ -72,23 +99,23 @@ const HomeScreen = () => {
       </Body>
       <Footer style={styles.footer}>
         <EButton
-          title="Log In"
+          title="Sign Up"
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
           onPress={methods.handleSubmit(onSubmit, onError)}
         />
-        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-          <Text style={styles.textForgot}>Forgot your password?</Text>
-        </TouchableOpacity>
       </Footer>
     </Container>
   );
 };
 
-export default HomeScreen;
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
   footer: { marginBottom: 10 },
+  body: {
+    marginTop: 20,
+  },
   textIcon: {
     color: COLORS.PRIMARY,
     fontWeight: '700',

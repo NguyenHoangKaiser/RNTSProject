@@ -1,20 +1,20 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import {
   useController,
   useFormContext,
   UseControllerProps,
 } from 'react-hook-form';
-import {Input, InputProps} from '@rneui/themed';
-import {COLORS, FONT} from '@config';
+import { Input, InputProps } from '@rneui/themed';
+import { COLORS, FONT } from '@config';
 
 type InputFieldProps = Omit<InputProps, 'ref'> & UseControllerProps;
 
 const ControlledInput = (props: InputFieldProps) => {
   const formContext = useFormContext();
-  const {errors} = formContext.formState;
-  const {name, ...otherProps} = props;
-  const {field} = useController(props);
+  const { errors } = formContext.formState;
+  const { name, ...otherProps } = props;
+  const { field } = useController(props);
 
   return (
     <Input
@@ -25,7 +25,7 @@ const ControlledInput = (props: InputFieldProps) => {
       containerStyle={styles.container}
       inputStyle={styles.input}
       errorMessage={errors[name]?.message as string}
-      errorStyle={{fontFamily: FONT.MEDIUM}}
+      errorStyle={{ fontFamily: FONT.MEDIUM }}
       {...otherProps}
     />
   );
@@ -46,7 +46,7 @@ export default function InputField(props: InputFieldProps) {
 }
 
 const styles = StyleSheet.create({
-  container: {paddingHorizontal: 0, marginBottom: 4},
+  container: { paddingHorizontal: 0, marginBottom: 4 },
   input: {
     fontSize: 16,
     fontFamily: FONT.MEDIUM,

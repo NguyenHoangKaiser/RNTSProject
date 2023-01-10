@@ -1,8 +1,8 @@
 import Container from '@components/Container';
 import HeaderButton from '@components/Header/HeaderButton';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
-import {Button, Text} from 'react-native';
+import { Button, Text } from 'react-native';
 import {
   ComposeScreenNavigationProp,
   CustomScreenRouteProp,
@@ -12,14 +12,19 @@ const FeedScreen = () => {
   const navigation =
     useNavigation<ComposeScreenNavigationProp<'Feed', 'Settings'>>();
   const route = useRoute<CustomScreenRouteProp<'Feed'>>();
-  const {name} = route.params;
+  const { name } = route.params;
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <HeaderButton title="Right" onPress={() => console.log('right')} />
+        <HeaderButton
+          title="Right"
+          onPress={() => navigation.navigate('Home')}
+        />
       ),
     });
   }, [navigation]);
+
   return (
     <Container>
       <Text>{name}</Text>
@@ -27,7 +32,7 @@ const FeedScreen = () => {
         title="Press"
         onPress={() =>
           navigation.navigate('Settings', {
-            title: 'HEHELLO',
+            title: 'HELLO',
           })
         }
       />

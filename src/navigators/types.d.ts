@@ -17,9 +17,10 @@ import type {
  */
 export type RootStackParamList = {
   Home: undefined;
-  Feed: {name: string};
+  Feed: { name: string };
+  SignUp: undefined;
   NotFound: undefined;
-  Setting: {title: string};
+  Setting: { title: string };
 };
 
 // export type CustomScreenProps<T extends keyof RootStackParamList> = {
@@ -53,7 +54,7 @@ export type CustomScreenRouteProp<T extends keyof RootStackParamList> =
  */
 export type BottomTabNavigatorParamList = {
   HomeStack: RootStackParamList;
-  Settings: {title: string};
+  Settings: { title: string };
 };
 
 /** Use this to type navigation of nested navigators.
