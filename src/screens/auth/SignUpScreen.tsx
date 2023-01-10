@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { Button as EButton, Icon } from '@rneui/themed';
+import { CheckBox, Button as EButton, Icon } from '@rneui/themed';
 import React, { useState } from 'react';
 import Container from '@components/Container';
 import Body from '@components/Body';
@@ -26,9 +26,11 @@ const SignUpScreen = () => {
   const navigation =
     useNavigation<CustomStackScreenProps<'SignUp'>['navigation']>();
   const [secure, setSecure] = useState(true);
+  const [checked, setChecked] = useState(false);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
+      title: 'Sign Up',
       headerLeft: () => (
         <Icon
           name="close"
@@ -38,7 +40,7 @@ const SignUpScreen = () => {
       ),
       headerRight: () => (
         <HeaderButton
-          title="Sign In"
+          title="Login"
           onPress={() => navigation.navigate('Login')}
         />
       ),
@@ -96,6 +98,40 @@ const SignUpScreen = () => {
               </TouchableOpacity>
             }
           />
+          <CheckBox
+            iconType="material-community"
+            checked={checked}
+            onPress={() => setChecked(!checked)}
+            checkedIcon="checkbox-marked"
+            uncheckedIcon="checkbox-blank-outline"
+            checkedColor={COLORS.PRIMARY}
+            textStyle={styles.checkBoxText}
+            containerStyle={styles.checkBoxContainer}
+            title="I agree to the terms and conditions"
+          />
+          {/* <CheckBox
+            checkedIcon={
+              <Icon
+                name="checkbox-marked"
+                type="material-community"
+                color="green"
+                size={25}
+                iconStyle={{ marginRight: 10, borderRadius: 12 }}
+              />
+            }
+            uncheckedIcon={
+              <Icon
+                name="checkbox-blank-outline"
+                type="material-community"
+                color="green"
+                size={25}
+                iconStyle={{ marginRight: 10, borderRadius: 12 }}
+              />
+            }
+            onPress={() => setChecked(!checked)}
+            checked={checked}
+            title="I agree to the terms and conditions"
+          /> */}
         </FormProvider>
       </Body>
       <Footer style={styles.footer}>
@@ -113,6 +149,16 @@ const SignUpScreen = () => {
 export default SignUpScreen;
 
 const styles = StyleSheet.create({
+  checkBoxContainer: {
+    marginLeft: -2,
+    paddingLeft: 0,
+  },
+  checkBoxText: {
+    fontSize: 14,
+    fontFamily: FONT.MEDIUM,
+    fontWeight: '400',
+    color: COLORS.GRAY_TEXT,
+  },
   footer: { marginBottom: 10 },
   body: {
     marginTop: 20,

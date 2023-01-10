@@ -8,6 +8,7 @@ const COLORS = {
   BUTTON_TEXT: '#fff',
   GRAY_BACKGROUND: '#f6f6f6',
   GRAY_BORDER: '#bdbdbd',
+  GRAY_TEXT: '#666666',
 };
 
 const FONT = {

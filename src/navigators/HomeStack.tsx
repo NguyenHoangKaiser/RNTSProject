@@ -6,7 +6,7 @@ import LoginScreen from '@screens/auth/LoginScreen';
 import { RootStackParamList } from './types';
 // import DetailsScreen from '@screens/details';
 import HeaderButton from '@components/Header/HeaderButton';
-import SignUpScreen from '@screens/auth';
+import SignUpScreen from '@screens/auth/SignUpScreen';
 import BottomTabs from './Tab';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
