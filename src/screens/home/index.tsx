@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {CustomScreenNavigationProp} from 'src/navigators/types';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
 import Body from '@components/Body';
 import Container from '@components/Container';
 import Footer from '@components/Footer';
@@ -10,40 +8,78 @@ import InputField from '@components/Input';
 import {COLORS, FONT} from '@config';
 import {useNavigation} from '@react-navigation/native';
 import {Button} from '@rneui/themed';
+import {
+  useForm,
+  FormProvider,
+  SubmitHandler,
+  SubmitErrorHandler,
+} from 'react-hook-form';
+
+type FormValues = {
+  email: string;
+  password: string;
+};
 
 const HomeScreen = () => {
   const [secure, setSecure] = useState(true);
   const navigation = useNavigation<CustomScreenNavigationProp<'Feed'>>();
+
+  const {...methods} = useForm<FormValues>({mode: 'onChange'});
+  const onSubmit: SubmitHandler<FormValues> = data => {
+    navigation.navigate('Feed', {name: data.email});
+    methods.reset();
+  };
+
+  const onError: SubmitErrorHandler<FormValues> = (errors, _e) => {
+    return console.log(errors);
+  };
+
   return (
     <Container>
       <Body>
-        <Text style={styles.title}>Login</Text>
-        <InputField label="Email" keyboardType="email-address" />
-        <InputField
-          label="Password"
-          secure={secure}
-          inputType="password"
-          fieldButtonLabel={secure ? 'Show' : 'Hidden'}
-          fieldButtonFunction={() => {
-            setSecure(!secure);
-          }}
-        />
+        <FormProvider {...methods}>
+          <Text style={styles.title}>Login</Text>
+          <InputField
+            name="email"
+            rules={{
+              required: 'Email is required!',
+              pattern: {
+                value: /\b[\w\\.+-]+@[\w\\.-]+\.\w{2,4}\b/,
+                message: 'Must be formatted: john.doe@email.com',
+              },
+            }}
+            placeholder="Email"
+            keyboardType="email-address"
+          />
+          <InputField
+            placeholder="Password"
+            name="password"
+            secureTextEntry={secure}
+            rules={{required: 'Password is required!'}}
+            rightIcon={
+              <TouchableOpacity
+                onPress={() => {
+                  setSecure(!secure);
+                }}>
+                <Text style={styles.textIcon}>
+                  {secure ? 'Show' : 'Hidden'}
+                </Text>
+              </TouchableOpacity>
+            }
+          />
+        </FormProvider>
       </Body>
       <Footer>
         <Button
           title="Log In"
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
-          onPress={() =>
-            navigation.navigate('Feed', {
-              name: 'Bruh',
-            })
-          }
+          onPress={methods.handleSubmit(onSubmit, onError)}
         />
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('Feed', {
-              name: 'bruh',
+              name: 'Bro',
             })
           }>
           <Text style={styles.textForgot}>Forgot your password?</Text>
@@ -56,6 +92,13 @@ const HomeScreen = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  textIcon: {
+    color: COLORS.PRIMARY,
+    fontWeight: '700',
+    fontFamily: FONT.MEDIUM,
+    paddingRight: 6,
+    fontSize: 16,
+  },
   textForgot: {
     textAlign: 'center',
     fontSize: 16,

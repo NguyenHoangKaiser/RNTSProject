@@ -1,15 +1,16 @@
 import type {
+  BottomTabNavigationProp,
+  BottomTabScreenProps,
+} from '@react-navigation/bottom-tabs';
+import type {
   CompositeNavigationProp,
+  CompositeScreenProps,
   RouteProp,
 } from '@react-navigation/native';
 import type {
   NativeStackNavigationProp,
-  // NativeStackScreenProps,
+  NativeStackScreenProps,
 } from '@react-navigation/native-stack';
-import type {
-  BottomTabNavigationProp,
-  // BottomTabScreenProps,
-} from '@react-navigation/bottom-tabs';
 
 /**
  * The root stack param list type.
@@ -20,6 +21,18 @@ export type RootStackParamList = {
   NotFound: undefined;
   Setting: {title: string};
 };
+
+// export type CustomScreenProps<T extends keyof RootStackParamList> = {
+//   navigation: CustomScreenNavigationProp<T>;
+//   route: CustomScreenRouteProp<T>;
+// };
+
+/**
+ * Use this to type screen props of StackNavigator, faster than use individual types
+ * @example const route = useRoute<CustomStackScreenProps<'Setting'>['route']>();
+ */
+export type CustomStackScreenProps<T extends keyof RootStackParamList> =
+  NativeStackScreenProps<RootStackParamList, T>;
 
 /**
  * Use this to type navigation of StackNavigator
@@ -33,7 +46,7 @@ export type CustomScreenNavigationProp<T extends keyof RootStackParamList> =
  * @example const route = useRoute<CustomScreenRouteProp<'Feed'>>();
  */
 export type CustomScreenRouteProp<T extends keyof RootStackParamList> =
-  RouteProp<HomeStackNavigatorParamList, T>;
+  RouteProp<RootStackParamList, T>;
 
 /**
  * The bottom tab navigator param list type.
@@ -45,7 +58,7 @@ export type BottomTabNavigatorParamList = {
 
 /** Use this to type navigation of nested navigators.
  * @param T route to go from RootStackNavigator
- * @param P route to go from BottomTabNavigator
+ * @param P route to go to in BottomTabNavigator
  * @example const navigation = useNavigation<ComposeScreenNavigationProp<'Feed', 'Settings'>>();
  */
 export type ComposeScreenNavigationProp<
@@ -55,6 +68,19 @@ export type ComposeScreenNavigationProp<
   NativeStackNavigationProp<RootStackParamList, T>,
   BottomTabNavigationProp<BottomTabNavigatorParamList, P>
 >;
+
+//! This is not working
+export type HomeTabScreenProps<T extends keyof BottomTabNavigatorParamList> =
+  CompositeScreenProps<
+    CustomStackScreenProps<keyof RootStackParamList>,
+    BottomTabScreenProps<BottomTabNavigatorParamList, T>
+  >;
+
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends RootStackParamList {}
+  }
+}
 
 // import type {
 //   CompositeNavigationProp,

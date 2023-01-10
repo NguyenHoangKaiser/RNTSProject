@@ -11,4 +11,4 @@ const Footer = ({children}: Props) => {
 
 export default Footer;
 
-const styles = StyleSheet.create({footer: {flexShrink: 0, marginBottom: 32}});
+const styles = StyleSheet.create({footer: {flexShrink: 0, marginBottom: 10}});

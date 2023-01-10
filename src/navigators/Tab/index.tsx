@@ -5,6 +5,7 @@ import HomeStackNavigator from '../HomeStack';
 import SettingsScreen from '../../screens/SettingScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HeaderButton from '@components/Header/HeaderButton';
+import {TouchableOpacity} from 'react-native';
 
 const Tab = createBottomTabNavigator<BottomTabNavigatorParamList>();
 
@@ -16,7 +17,9 @@ const BottomTabs = () => {
           fontSize: 26,
         },
         headerTitleAlign: 'center',
+        tabBarButton: props => <TouchableOpacity {...props} />,
         headerShadowVisible: false,
+        tabBarShowLabel: false,
         headerLeft: () => <HeaderButton title="Back" />,
         tabBarIcon: ({focused, color, size}) => {
           let iconName = 'ios-information-circle';

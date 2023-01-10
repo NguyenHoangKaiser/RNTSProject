@@ -1,10 +1,10 @@
 import {useRoute} from '@react-navigation/native';
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {CustomScreenRouteProp} from 'src/navigators/types';
+import {StyleSheet, Text, View} from 'react-native';
+import {CustomStackScreenProps} from 'src/navigators/types';
 
 const SettingsScreen = () => {
-  const route = useRoute<CustomScreenRouteProp<'Feed'>>();
+  const route = useRoute<CustomStackScreenProps<'Setting'>['route']>();
   const {title} = route.params;
   return (
     <View style={styles.view}>
