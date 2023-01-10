@@ -1,14 +1,15 @@
 import type {
-  BottomTabNavigationProp,
+  // BottomTabNavigationProp,
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
 import type {
-  CompositeNavigationProp,
+  // CompositeNavigationProp,
   CompositeScreenProps,
-  RouteProp,
+  NavigatorScreenParams,
+  // RouteProp,
 } from '@react-navigation/native';
 import type {
-  NativeStackNavigationProp,
+  // NativeStackNavigationProp,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 
@@ -16,17 +17,12 @@ import type {
  * The root stack param list type.
  */
 export type RootStackParamList = {
-  Home: undefined;
-  Feed: { name: string };
+  Home: NavigatorScreenParams<BottomTabNavigatorParamList>;
+  Login: undefined;
   SignUp: undefined;
   NotFound: undefined;
-  Setting: { title: string };
+  // Setting: { title: string };
 };
-
-// export type CustomScreenProps<T extends keyof RootStackParamList> = {
-//   navigation: CustomScreenNavigationProp<T>;
-//   route: CustomScreenRouteProp<T>;
-// };
 
 /**
  * Use this to type screen props of StackNavigator, faster than use individual types
@@ -36,45 +32,34 @@ export type CustomStackScreenProps<T extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, T>;
 
 /**
- * Use this to type navigation of StackNavigator
- * @example const navigation = useNavigation<CustomScreenNavigationProp<'Feed'>>();
- */
-export type CustomScreenNavigationProp<T extends keyof RootStackParamList> =
-  NativeStackNavigationProp<RootStackParamList, T>;
-
-/**
- * Use this to type route of StackNavigator
- * @example const route = useRoute<CustomScreenRouteProp<'Feed'>>();
- */
-export type CustomScreenRouteProp<T extends keyof RootStackParamList> =
-  RouteProp<RootStackParamList, T>;
-
-/**
  * The bottom tab navigator param list type.
  */
 export type BottomTabNavigatorParamList = {
-  HomeStack: RootStackParamList;
+  Detail: { title: string };
   Settings: { title: string };
+  Feed: { name: string };
 };
 
-/** Use this to type navigation of nested navigators.
+/**
+ * Use this to type screen props of StackNavigator to BottomTabNavigator
  * @param T route to go from RootStackNavigator
- * @param P route to go to in BottomTabNavigator
- * @example const navigation = useNavigation<ComposeScreenNavigationProp<'Feed', 'Settings'>>();
+ * @example const navigation = useNavigation<ComposeScreenProps<'Login'>['navigation']>();
  */
-export type ComposeScreenNavigationProp<
-  T extends keyof RootStackParamList,
-  P extends keyof BottomTabNavigatorParamList,
-> = CompositeNavigationProp<
-  NativeStackNavigationProp<RootStackParamList, T>,
-  BottomTabNavigationProp<BottomTabNavigatorParamList, P>
->;
+export type ComposeScreenProps<T extends keyof RootStackParamList> =
+  CompositeScreenProps<
+    NativeStackScreenProps<RootStackParamList, T>,
+    BottomTabScreenProps<BottomTabNavigatorParamList>
+  >;
 
-//! This is not working
+/**
+ * Use this to type screen props of nested BottomTabNavigator inside StackNavigator
+ * @param T route name of the screen in BottomTabNavigator
+ * @example const route = useRoute<HomeTabScreenProps<'Settings'>['route']>();
+ */
 export type HomeTabScreenProps<T extends keyof BottomTabNavigatorParamList> =
   CompositeScreenProps<
-    CustomStackScreenProps<keyof RootStackParamList>,
-    BottomTabScreenProps<BottomTabNavigatorParamList, T>
+    BottomTabScreenProps<BottomTabNavigatorParamList, T>,
+    CustomStackScreenProps<keyof RootStackParamList>
   >;
 
 declare global {
@@ -83,64 +68,26 @@ declare global {
   }
 }
 
-// import type {
-//   CompositeNavigationProp,
-//   RouteProp,
-// } from '@react-navigation/native';
-// import type {
-//   NativeStackNavigationProp,
-//   NativeStackScreenProps,
-// } from '@react-navigation/native-stack';
+/**
+ * Use this to type navigation of StackNavigator
+ * @example const navigation = useNavigation<CustomScreenNavigationProp<'Feed'>>();
+ */
+// export type CustomScreenNavigationProp<T extends keyof RootStackParamList> =
+//   NativeStackNavigationProp<RootStackParamList, T>;
 
-// export type StackNavigatorParamList = {
-//   Home: undefined;
-//   Details: {
-//     name: string;
-//     birthYear: string;
-//   };
-// };
+/**
+ * Use this to type route of StackNavigator
+ * @example const route = useRoute<CustomScreenRouteProp<'Feed'>>();
+ */
+// export type CustomScreenRouteProp<T extends keyof RootStackParamList> =
+//   RouteProp<RootStackParamList, T>;
 
-// export type HomeScreenNavigationProp = CompositeNavigationProp<
-//   NativeStackNavigationProp<StackNavigatorParamList, 'Details'>,
-//   BottomTabNavigationProp<BottomTabNavigatorParamList, 'Feed'>
-// >;
-
-// export type DetailsScreenRouteProp = RouteProp<
-//   StackNavigatorParamList,
-//   'Details'
-// >;
-
-// export type BottomTabNavigatorParamList = {
-//   HomeStack: StackNavigatorParamList;
-//   Feed: undefined;
-//   Settings: undefined;
-// };
-
-// type HomeScreenProps = NativeStackScreenProps<
-//   StackNavigatorParamList,
-//   'Details'
-// >;
-
-// export type CustomBottomNavigationProp<T extends keyof BottomTabNavigatorParamList, P extends keyof BottomTabNavigatorParamList> = {
-//   BottomTabNavigationProp<BottomTabNavigatorParamList, P>;
-// };
-
-// export type RootStackScreenProps<T extends keyof RootStackParamList> =
-//   StackScreenProps<RootStackParamList, T>;
-
-// export type HomeTabParamList = {
-//   Popular: undefined;
-//   Latest: undefined;
-// };
-
-// export type HomeTabScreenProps<T extends keyof BottomTabNavigatorParamList> =
-//   CompositeScreenProps<
-//     BottomTabScreenProps<BottomTabNavigatorParamList, T>,
-//     NativeStackScreenProps<keyof RootStackParamList>
+/** Use this to type navigation of StackNavigator to BottomTabNavigator
+ * @param T route to go from RootStackNavigator
+ * @example const navigation = useNavigation<ComposeScreenNavigationProp<'Login'>>();
+ */
+// export type ComposeScreenNavigationProp<T extends keyof RootStackParamList> =
+//   CompositeNavigationProp<
+//     NativeStackNavigationProp<RootStackParamList, T>,
+//     BottomTabNavigationProp<BottomTabNavigatorParamList>
 //   >;
-
-// declare global {
-//   namespace ReactNavigation {
-//     interface RootParamList extends RootStackParamList {}
-//   }
-// }

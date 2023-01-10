@@ -1,10 +1,10 @@
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { CustomStackScreenProps } from 'src/navigators/types';
+import { HomeTabScreenProps } from 'src/navigators/types';
 
 const SettingsScreen = () => {
-  const route = useRoute<CustomStackScreenProps<'Setting'>['route']>();
+  const route = useRoute<HomeTabScreenProps<'Settings'>['route']>();
   const { title } = route.params;
   return (
     <View style={styles.view}>

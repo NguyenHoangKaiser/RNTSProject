@@ -5,7 +5,7 @@ import Container from '@components/Container';
 import Body from '@components/Body';
 import Footer from '@components/Footer';
 import { useNavigation } from '@react-navigation/native';
-import { CustomScreenNavigationProp } from 'src/navigators/types';
+import { CustomStackScreenProps } from 'src/navigators/types';
 import InputField from '@components/Input';
 import {
   useForm,
@@ -23,7 +23,8 @@ type FormValues = {
 };
 
 const SignUpScreen = () => {
-  const navigation = useNavigation<CustomScreenNavigationProp<'SignUp'>>();
+  const navigation =
+    useNavigation<CustomStackScreenProps<'SignUp'>['navigation']>();
   const [secure, setSecure] = useState(true);
 
   React.useLayoutEffect(() => {
@@ -38,7 +39,7 @@ const SignUpScreen = () => {
       headerRight: () => (
         <HeaderButton
           title="Sign In"
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('Login')}
         />
       ),
     });
@@ -48,7 +49,7 @@ const SignUpScreen = () => {
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     // navigation.navigate('Feed', {name: data.email});
     console.log(data);
-    navigation.replace('Home');
+    navigation.replace('Login');
     methods.reset();
   };
 

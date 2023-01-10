@@ -1,6 +1,3 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { CustomScreenNavigationProp } from 'src/navigators/types';
 import Body from '@components/Body';
 import Container from '@components/Container';
 import Footer from '@components/Footer';
@@ -8,26 +5,31 @@ import InputField from '@components/Input';
 import { COLORS, FONT } from '@config';
 import { useNavigation } from '@react-navigation/native';
 import { Button as EButton } from '@rneui/themed';
+import React, { useState } from 'react';
 import {
-  useForm,
   FormProvider,
-  SubmitHandler,
   SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
 } from 'react-hook-form';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ComposeScreenProps } from 'src/navigators/types';
 
 type FormValues = {
   email: string;
   password: string;
 };
 
-const HomeScreen = () => {
+const LoginScreen = () => {
   const [secure, setSecure] = useState(true);
-  const navigation = useNavigation<CustomScreenNavigationProp<'Feed'>>();
+  const navigation = useNavigation<ComposeScreenProps<'Login'>['navigation']>();
 
   const { ...methods } = useForm<FormValues>({ mode: 'onChange' });
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    // navigation.navigate('Feed', {name: data.email});
-    navigation.replace('Feed', { name: data.email });
+    navigation.replace('Home', {
+      screen: 'Feed',
+      params: { name: data.email },
+    });
     methods.reset();
   };
 
@@ -85,7 +87,7 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   footer: { marginBottom: 10 },

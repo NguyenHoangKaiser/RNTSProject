@@ -4,14 +4,14 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { Button, Text } from 'react-native';
 import {
-  ComposeScreenNavigationProp,
-  CustomScreenRouteProp,
+  // ComposeScreenNavigationProp,
+  // CustomScreenRouteProp,
+  HomeTabScreenProps,
 } from 'src/navigators/types';
 
 const FeedScreen = () => {
-  const navigation =
-    useNavigation<ComposeScreenNavigationProp<'Feed', 'Settings'>>();
-  const route = useRoute<CustomScreenRouteProp<'Feed'>>();
+  const navigation = useNavigation<HomeTabScreenProps<'Feed'>['navigation']>();
+  const route = useRoute<HomeTabScreenProps<'Feed'>['route']>();
   const { name } = route.params;
 
   React.useLayoutEffect(() => {
@@ -19,7 +19,11 @@ const FeedScreen = () => {
       headerRight: () => (
         <HeaderButton
           title="Right"
-          onPress={() => navigation.navigate('Home')}
+          onPress={() =>
+            navigation.navigate('Settings', {
+              title: 'HELLO',
+            })
+          }
         />
       ),
     });

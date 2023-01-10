@@ -2,19 +2,19 @@ import React from 'react';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import LoginScreen from '@screens/auth/LoginScreen';
 import { RootStackParamList } from './types';
-import HomeScreen from '@screens/home';
-import FeedScreen from '@screens/FeedScreen';
 // import DetailsScreen from '@screens/details';
 import HeaderButton from '@components/Header/HeaderButton';
 import SignUpScreen from '@screens/auth';
+import BottomTabs from './Tab';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const HomeStackNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Login"
       screenOptions={{
         // title: 'Feed', //Set Header Title
         // headerStyle: {
@@ -31,13 +31,16 @@ const HomeStackNavigator = () => {
         headerLeft: () => <HeaderButton title="Back" />,
       }}>
       <Stack.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Login"
+        component={LoginScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Feed" component={FeedScreen} />
+      <Stack.Screen
+        name="Home"
+        component={BottomTabs}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="SignUp" component={SignUpScreen} />
-      {/* <Stack.Screen name="Details" component={DetailsScreen} /> */}
     </Stack.Navigator>
   );
 };

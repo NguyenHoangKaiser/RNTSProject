@@ -4,14 +4,16 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SettingsScreen from '../../screens/SettingScreen';
-import HomeStackNavigator from '../HomeStack';
 import { BottomTabNavigatorParamList } from '../types';
+import DetailScreen from '@screens/DetailScreen';
+import FeedScreen from '@screens/FeedScreen';
 
 const Tab = createBottomTabNavigator<BottomTabNavigatorParamList>();
 
 const BottomTabs = () => {
   return (
     <Tab.Navigator
+      initialRouteName="Feed"
       screenOptions={({ route }) => ({
         headerTitleStyle: {
           fontSize: 26,
@@ -24,12 +26,27 @@ const BottomTabs = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName = 'ios-information-circle';
 
-          if (route.name === 'HomeStack') {
-            iconName = focused
-              ? 'ios-information-circle'
-              : 'ios-information-circle-outline';
-          } else if (route.name === 'Settings') {
-            iconName = focused ? 'ios-list' : 'ios-list-outline';
+          // if (route.name === 'Detail') {
+          //   iconName = focused
+          //     ? 'ios-information-circle'
+          //     : 'ios-information-circle-outline';
+          // } else if (route.name === 'Settings') {
+          //   iconName = focused ? 'ios-list' : 'ios-list-outline';
+          // }
+          switch (route.name) {
+            case 'Detail':
+              iconName = focused
+                ? 'ios-information-circle'
+                : 'ios-information-circle-outline';
+              break;
+            case 'Settings':
+              iconName = focused ? 'ios-list' : 'ios-list-outline';
+              break;
+            case 'Feed':
+              iconName = focused ? 'ios-home' : 'ios-home-outline';
+              break;
+            default:
+              break;
           }
 
           // You can return any component that you like here!
@@ -39,9 +56,14 @@ const BottomTabs = () => {
         tabBarInactiveTintColor: 'gray',
       })}>
       <Tab.Screen
-        name="HomeStack"
-        component={HomeStackNavigator}
-        options={{ headerShown: false }}
+        name="Feed"
+        component={FeedScreen}
+        initialParams={{ name: 'Default' }}
+      />
+      <Tab.Screen
+        name="Detail"
+        component={DetailScreen}
+        initialParams={{ title: 'Default' }}
       />
       <Tab.Screen
         name="Settings"
