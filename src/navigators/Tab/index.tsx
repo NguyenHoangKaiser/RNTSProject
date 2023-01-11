@@ -7,6 +7,7 @@ import SettingsScreen from '../../screens/SettingScreen';
 import { BottomTabNavigatorParamList } from '../types';
 import DetailScreen from '@screens/DetailScreen';
 import FeedScreen from '@screens/FeedScreen';
+import { FONT } from '@config';
 
 const Tab = createBottomTabNavigator<BottomTabNavigatorParamList>();
 
@@ -16,7 +17,9 @@ const BottomTabs = () => {
       initialRouteName="Feed"
       screenOptions={({ route }) => ({
         headerTitleStyle: {
-          fontSize: 26,
+          fontSize: 30,
+          fontWeight: 'bold',
+          fontFamily: FONT.BOLD,
         },
         headerTitleAlign: 'center',
         tabBarButton: (props) => <TouchableOpacity {...props} />,
@@ -25,14 +28,6 @@ const BottomTabs = () => {
         headerLeft: () => <HeaderButton title="Back" />,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName = 'ios-information-circle';
-
-          // if (route.name === 'Detail') {
-          //   iconName = focused
-          //     ? 'ios-information-circle'
-          //     : 'ios-information-circle-outline';
-          // } else if (route.name === 'Settings') {
-          //   iconName = focused ? 'ios-list' : 'ios-list-outline';
-          // }
           switch (route.name) {
             case 'Detail':
               iconName = focused

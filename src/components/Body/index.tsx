@@ -7,7 +7,7 @@ type Props = {
 };
 
 const Body = ({ children, style }: Props) => {
-  return <View style={[style, styles.body]}>{children}</View>;
+  return <View style={[styles.body, style]}>{children}</View>;
 };
 
 export default Body;

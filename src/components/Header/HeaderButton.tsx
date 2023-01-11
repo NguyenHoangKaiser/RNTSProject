@@ -1,13 +1,13 @@
 import {
   Alert,
   StyleSheet,
-  Text,
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native';
 import React from 'react';
 import { COLORS, FONT } from '@config';
 import { useNavigation } from '@react-navigation/native';
+import { Text } from '@rneui/themed';
 
 type Props = {
   title: string;
@@ -35,7 +35,7 @@ const HeaderButton = ({ title, onPress, ...otherProps }: Props) => {
 export default HeaderButton;
 
 const styles = StyleSheet.create({
-  text: { color: COLORS.PRIMARY, fontSize: 16, fontFamily: FONT.MEDIUM },
+  text: { color: COLORS.PRIMARY, fontWeight: 'bold', fontFamily: FONT.BOLD },
   containerRight: { marginRight: 16 },
   containerLeft: { marginLeft: 16 },
 });

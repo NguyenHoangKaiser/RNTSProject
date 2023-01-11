@@ -7,11 +7,11 @@ type Props = {
 };
 
 const Footer = ({ children, style }: Props) => {
-  return <View style={[style, styles.footer]}>{children}</View>;
+  return <View style={[styles.footer, style]}>{children}</View>;
 };
 
 export default Footer;
 
 const styles = StyleSheet.create({
-  footer: { flexShrink: 0 },
+  footer: { flexShrink: 0, marginBottom: 10 },
 });

@@ -8,6 +8,7 @@ import { RootStackParamList } from './types';
 import HeaderButton from '@components/Header/HeaderButton';
 import SignUpScreen from '@screens/auth/SignUpScreen';
 import BottomTabs from './Tab';
+import { FONT } from '@config';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -16,15 +17,10 @@ const HomeStackNavigator = () => {
     <Stack.Navigator
       initialRouteName="Login"
       screenOptions={{
-        // title: 'Feed', //Set Header Title
-        // headerStyle: {
-        //   backgroundColor: COLORS.PRIMARY, //Set Header color
-        // },
-        // headerTintColor: 'black', //Set Header tint color
         headerTitleStyle: {
-          // fontWeight: 'bold', //Set Header text style
-          // color: 'green',
-          fontSize: 26,
+          fontSize: 30,
+          fontWeight: 'bold',
+          fontFamily: FONT.BOLD,
         },
         headerTitleAlign: 'center',
         headerShadowVisible: false,

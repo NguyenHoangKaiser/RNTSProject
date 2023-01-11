@@ -1,5 +1,5 @@
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { CheckBox, Button as EButton, Icon } from '@rneui/themed';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { CheckBox, Button, Icon, Text } from '@rneui/themed';
 import React, { useState } from 'react';
 import Container from '@components/Container';
 import Body from '@components/Body';
@@ -12,21 +12,22 @@ import {
   SubmitHandler,
   SubmitErrorHandler,
   FormProvider,
+  Controller,
 } from 'react-hook-form';
-import { COLORS, FONT } from '@config';
+import { COLORS } from '@config';
 import HeaderButton from '@components/Header/HeaderButton';
 
 type FormValues = {
   name: string;
   email: string;
   password: string;
+  checkBox: boolean;
 };
 
 const SignUpScreen = () => {
   const navigation =
     useNavigation<CustomStackScreenProps<'SignUp'>['navigation']>();
   const [secure, setSecure] = useState(true);
-  const [checked, setChecked] = useState(false);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -47,9 +48,11 @@ const SignUpScreen = () => {
     });
   }, [navigation]);
 
-  const { ...methods } = useForm<FormValues>({ mode: 'onChange' });
+  const { ...methods } = useForm<FormValues>({
+    mode: 'onChange',
+    defaultValues: { checkBox: false },
+  });
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    // navigation.navigate('Feed', {name: data.email});
     console.log(data);
     navigation.replace('Login');
     methods.reset();
@@ -98,47 +101,23 @@ const SignUpScreen = () => {
               </TouchableOpacity>
             }
           />
-          <CheckBox
-            iconType="material-community"
-            checked={checked}
-            onPress={() => setChecked(!checked)}
-            checkedIcon="checkbox-marked"
-            uncheckedIcon="checkbox-blank-outline"
-            checkedColor={COLORS.PRIMARY}
-            textStyle={styles.checkBoxText}
-            containerStyle={styles.checkBoxContainer}
-            title="I agree to the terms and conditions"
+          <Controller
+            control={methods.control}
+            name="checkBox"
+            render={({ field: { onChange, value } }) => (
+              <CheckBox
+                checked={value}
+                onPress={() => onChange(!value)}
+                containerStyle={styles.checkBoxContainer}
+                title="I would like to receive your newsletter and other promotional information."
+              />
+            )}
           />
-          {/* <CheckBox
-            checkedIcon={
-              <Icon
-                name="checkbox-marked"
-                type="material-community"
-                color="green"
-                size={25}
-                iconStyle={{ marginRight: 10, borderRadius: 12 }}
-              />
-            }
-            uncheckedIcon={
-              <Icon
-                name="checkbox-blank-outline"
-                type="material-community"
-                color="green"
-                size={25}
-                iconStyle={{ marginRight: 10, borderRadius: 12 }}
-              />
-            }
-            onPress={() => setChecked(!checked)}
-            checked={checked}
-            title="I agree to the terms and conditions"
-          /> */}
         </FormProvider>
       </Body>
-      <Footer style={styles.footer}>
-        <EButton
+      <Footer>
+        <Button
           title="Sign Up"
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
           onPress={methods.handleSubmit(onSubmit, onError)}
         />
       </Footer>
@@ -149,48 +128,16 @@ const SignUpScreen = () => {
 export default SignUpScreen;
 
 const styles = StyleSheet.create({
+  footer: { marginBottom: 55 },
   checkBoxContainer: {
     marginLeft: -2,
     paddingLeft: 0,
   },
-  checkBoxText: {
-    fontSize: 14,
-    fontFamily: FONT.MEDIUM,
-    fontWeight: '400',
-    color: COLORS.GRAY_TEXT,
-  },
-  footer: { marginBottom: 10 },
   body: {
     marginTop: 20,
   },
   textIcon: {
     color: COLORS.PRIMARY,
-    fontWeight: '700',
-    fontFamily: FONT.MEDIUM,
     paddingRight: 6,
-    fontSize: 16,
-  },
-  textForgot: {
-    textAlign: 'center',
-    fontSize: 16,
-    color: COLORS.PRIMARY,
-    fontFamily: FONT.BOLD,
-    marginTop: 16,
-  },
-  buttonTitle: { fontWeight: 'bold', fontSize: 16 },
-  button: {
-    backgroundColor: COLORS.PRIMARY,
-    borderWidth: 2,
-    borderColor: 'white',
-    borderRadius: 100,
-  },
-  title: {
-    fontFamily: FONT.MEDIUM,
-    fontSize: 30,
-    fontWeight: '500',
-    color: 'black',
-    marginBottom: 30,
-    marginTop: 15,
-    textAlign: 'center',
   },
 });
