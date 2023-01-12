@@ -7,7 +7,8 @@ const COLORS = {
   GRAY_BACKGROUND: '#f6f6f6',
   GRAY_BORDER: '#bdbdbd',
   GRAY_TEXT: '#666666',
-  // GRAY_BG_INPUT: '#E8E8E8',
+  SHADOW: '#656565',
+  GRAY_BG_INPUT: '#E8E8E8',
 };
 
 const FONT = {
@@ -110,6 +111,19 @@ const theme = createTheme({
         borderRadius: 8,
       },
       animation: 'none',
+    },
+    TabViewItem: {
+      style: {
+        width: '100%',
+      },
+    },
+    TabView: {
+      containerStyle: {
+        marginHorizontal: -16,
+      },
+      tabItemContainerStyle: {
+        marginHorizontal: 16,
+      },
     },
   },
 });

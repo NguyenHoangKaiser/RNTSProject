@@ -1,10 +1,9 @@
 import Body from '@components/Body';
 import Container from '@components/Container';
-import Footer from '@components/Footer';
 import HeaderButton from '@components/Header/HeaderButton';
 import { ItemList } from '@components/Item';
 import { useNavigation } from '@react-navigation/native';
-import { Button, SearchBar, Skeleton } from '@rneui/themed';
+import { SearchBar, Skeleton } from '@rneui/themed';
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { HomeTabScreenProps } from 'src/navigators/types';
@@ -70,7 +69,11 @@ const FeedScreen = () => {
       headerRight: () => (
         <HeaderButton
           title="Filter"
-          onPress={() => console.log('Right button pressed')}
+          onPress={() =>
+            navigation.navigate('Detail', {
+              title: 'Detail',
+            })
+          }
         />
       ),
     });
@@ -84,24 +87,10 @@ const FeedScreen = () => {
           onChangeText={updateSearch}
           searchIcon={false}
         />
-        {/* <FlatList
-          data={DATA}
-          style={styles.flatList}
-          renderItem={({ item }) => (
-            <ItemCard
-              data={item}
-              Component={TouchableHighlight}
-              containerStyle={[
-                styles.container,
-                item.header === search && styles.highLight,
-              ]}
-              onPress={() => setSearch(item.header)}
-            />
-          )}
-          keyExtractor={(item) => item.header}
-          extraData={search}
-        /> */}
-        <ScrollView>
+
+        <ScrollView
+          overScrollMode="never"
+          contentContainerStyle={styles.scrollView}>
           {DATA.map((item) => (
             <ItemList
               data={item}
@@ -112,17 +101,6 @@ const FeedScreen = () => {
           <Skeleton height={240} />
         </ScrollView>
       </Body>
-      <Footer>
-        <Button
-          title="Press"
-          color=""
-          onPress={() =>
-            navigation.navigate('Settings', {
-              title: 'HELLO',
-            })
-          }
-        />
-      </Footer>
     </Container>
   );
 };
@@ -130,6 +108,7 @@ const FeedScreen = () => {
 export default FeedScreen;
 
 const styles = StyleSheet.create({
+  scrollView: { paddingBottom: 10 },
   itemContainer: { paddingHorizontal: 0 },
   flatList: { marginBottom: 10, flexGrow: 0 },
   container: { alignItems: 'flex-start', paddingBottom: 0 },

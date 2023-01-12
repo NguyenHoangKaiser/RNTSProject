@@ -1,21 +1,23 @@
 import { COLORS } from '@config';
-import { Card, CardProps, Text, Skeleton } from '@rneui/themed';
+import { Card, Text, Skeleton, ListItem, ListItemProps } from '@rneui/themed';
 import type { ListData } from '@screens/FeedScreen';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
 type Props = {
   data: ListData;
-} & CardProps;
+} & ListItemProps;
 
 const ItemCard = ({ data, ...otherProps }: Props) => {
   return (
-    <Card {...otherProps}>
-      <Skeleton height={240} />
-      <Text style={styles.header}>Header {data.header}</Text>
-      <Text style={styles.content}>{data.content}</Text>
-      <Text style={styles.subText}>8m ago</Text>
-    </Card>
+    <ListItem {...otherProps}>
+      <Card containerStyle={{ width: '100%' }}>
+        <Skeleton height={240} />
+        <Text style={styles.header}>Header {data.header}</Text>
+        <Text style={styles.content}>{data.content}</Text>
+        <Text style={styles.subText}>8m ago</Text>
+      </Card>
+    </ListItem>
   );
 };
 
