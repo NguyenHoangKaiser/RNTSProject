@@ -1,28 +1,43 @@
+import Body from '@components/Body';
+import Container from '@components/Container';
 import HeaderButton from '@components/Header/HeaderButton';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { SearchBar } from '@rneui/themed';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { HomeTabScreenProps } from 'src/navigators/types';
+import { DATA } from './FeedScreen';
+import { ItemCard } from '@components/Item';
 
 const DetailScreen = () => {
-  const route = useRoute<HomeTabScreenProps<'Settings'>['route']>();
   const navigation =
     useNavigation<HomeTabScreenProps<'Settings'>['navigation']>();
-  const { title } = route.params;
   React.useLayoutEffect(() => {
     navigation.setOptions({
+      title: 'Content',
       headerRight: () => (
         <HeaderButton
-          title="Sign Up"
+          title="Filter"
           onPress={() => navigation.navigate('SignUp')}
         />
       ),
     });
   }, [navigation]);
   return (
-    <View style={styles.view}>
-      <Text style={styles.text}>Detail Screen {title}</Text>
-    </View>
+    <Container>
+      <Body>
+        <SearchBar searchIcon={false} />
+        <ScrollView>
+          {DATA.map((item) => (
+            <ItemCard
+              data={item}
+              containerStyle={styles.itemContainer}
+              key={item.header}
+            />
+          ))}
+        </ScrollView>
+      </Body>
+    </Container>
   );
 };
 
@@ -30,5 +45,6 @@ export default DetailScreen;
 
 const styles = StyleSheet.create({
   text: { fontSize: 18 },
+  itemContainer: { marginBottom: 8 },
   view: { flex: 1, paddingTop: 12, paddingHorizontal: 10 },
 });

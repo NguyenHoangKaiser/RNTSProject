@@ -1,20 +1,20 @@
-import Container from '@components/Container';
-import HeaderButton from '@components/Header/HeaderButton';
-import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
-import { HomeTabScreenProps } from 'src/navigators/types';
 import Body from '@components/Body';
+import Container from '@components/Container';
 import Footer from '@components/Footer';
-import { Button, SearchBar } from '@rneui/themed';
-import { FlatList, TouchableHighlight, StyleSheet } from 'react-native';
-import ItemCard from '@components/ItemCard';
+import HeaderButton from '@components/Header/HeaderButton';
+import { ItemList } from '@components/Item';
+import { useNavigation } from '@react-navigation/native';
+import { Button, SearchBar, Skeleton } from '@rneui/themed';
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+import { HomeTabScreenProps } from 'src/navigators/types';
 
 export type ListData = {
   header: string;
   content: string;
 };
 
-const DATA: ListData[] = [
+export const DATA: ListData[] = [
   {
     header: '1',
     content: 'Michael Scott',
@@ -31,30 +31,30 @@ const DATA: ListData[] = [
     header: '4',
     content: 'Dwight Schrute',
   },
-  {
-    header: '5',
-    content: 'Andy Bernard',
-  },
-  {
-    header: '6',
-    content: 'Ryan Howard',
-  },
-  {
-    header: '7',
-    content: 'Kelly Kapoor',
-  },
-  {
-    header: '8',
-    content: 'Toby Flenderson',
-  },
-  {
-    header: '9',
-    content: 'Stanley Hudson',
-  },
-  {
-    header: '10',
-    content: 'Phyllis Vance',
-  },
+  // {
+  //   header: '5',
+  //   content: 'Andy Bernard',
+  // },
+  // {
+  //   header: '6',
+  //   content: 'Ryan Howard',
+  // },
+  // {
+  //   header: '7',
+  //   content: 'Kelly Kapoor',
+  // },
+  // {
+  //   header: '8',
+  //   content: 'Toby Flenderson',
+  // },
+  // {
+  //   header: '9',
+  //   content: 'Stanley Hudson',
+  // },
+  // {
+  //   header: '10',
+  //   content: 'Phyllis Vance',
+  // },
 ];
 
 const FeedScreen = () => {
@@ -84,7 +84,7 @@ const FeedScreen = () => {
           onChangeText={updateSearch}
           searchIcon={false}
         />
-        <FlatList
+        {/* <FlatList
           data={DATA}
           style={styles.flatList}
           renderItem={({ item }) => (
@@ -100,10 +100,17 @@ const FeedScreen = () => {
           )}
           keyExtractor={(item) => item.header}
           extraData={search}
-        />
-        {/* <ScrollView>
+        /> */}
+        <ScrollView>
+          {DATA.map((item) => (
+            <ItemList
+              data={item}
+              containerStyle={styles.itemContainer}
+              key={item.header}
+            />
+          ))}
           <Skeleton height={240} />
-        </ScrollView> */}
+        </ScrollView>
       </Body>
       <Footer>
         <Button
@@ -123,6 +130,7 @@ const FeedScreen = () => {
 export default FeedScreen;
 
 const styles = StyleSheet.create({
+  itemContainer: { paddingHorizontal: 0 },
   flatList: { marginBottom: 10, flexGrow: 0 },
   container: { alignItems: 'flex-start', paddingBottom: 0 },
   highLight: { backgroundColor: 'gray' },

@@ -1,10 +1,7 @@
 import React from 'react';
-
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import LoginScreen from '@screens/auth/LoginScreen';
 import { RootStackParamList } from './types';
-// import DetailsScreen from '@screens/details';
 import HeaderButton from '@components/Header/HeaderButton';
 import SignUpScreen from '@screens/auth/SignUpScreen';
 import BottomTabs from './Tab';
@@ -19,8 +16,7 @@ const HomeStackNavigator = () => {
       screenOptions={{
         headerTitleStyle: {
           fontSize: 30,
-          fontWeight: 'bold',
-          fontFamily: FONT.BOLD,
+          fontFamily: FONT.SEMI,
         },
         headerTitleAlign: 'center',
         headerShadowVisible: false,

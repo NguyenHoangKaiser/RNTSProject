@@ -1,14 +1,14 @@
-import { StyleSheet, View } from 'react-native';
-import React from 'react';
+import { COLORS } from '@config';
 import { Avatar, Divider, ListItem, ListItemProps, Text } from '@rneui/themed';
 import type { ListData } from '@screens/FeedScreen';
-import { COLORS } from '@config';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
 type Props = {
   data: ListData;
 } & ListItemProps;
 
-const ItemCard = ({ data, ...otherProps }: Props) => {
+const ItemList = ({ data, ...otherProps }: Props) => {
   return (
     <ListItem {...otherProps}>
       <Avatar size={50} title="A" containerStyle={styles.avatarContainer} />
@@ -26,7 +26,7 @@ const ItemCard = ({ data, ...otherProps }: Props) => {
   );
 };
 
-export default ItemCard;
+export default ItemList;
 
 const styles = StyleSheet.create({
   divider: { width: '100%', marginTop: 15 },

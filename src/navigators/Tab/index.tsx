@@ -18,8 +18,7 @@ const BottomTabs = () => {
       screenOptions={({ route }) => ({
         headerTitleStyle: {
           fontSize: 30,
-          fontWeight: 'bold',
-          fontFamily: FONT.BOLD,
+          fontFamily: FONT.SEMI,
         },
         headerTitleAlign: 'center',
         tabBarButton: (props) => <TouchableOpacity {...props} />,

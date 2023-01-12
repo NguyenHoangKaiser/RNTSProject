@@ -1,6 +1,7 @@
 import {
   Alert,
   StyleSheet,
+  TextStyle,
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native';
@@ -11,10 +12,11 @@ import { Text } from '@rneui/themed';
 
 type Props = {
   title: string;
+  textStyle?: TextStyle;
   onPress?: TouchableOpacityProps['onPress'];
 } & TouchableOpacityProps;
 
-const HeaderButton = ({ title, onPress, ...otherProps }: Props) => {
+const HeaderButton = ({ title, textStyle, onPress, ...otherProps }: Props) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
@@ -25,9 +27,12 @@ const HeaderButton = ({ title, onPress, ...otherProps }: Props) => {
           ? navigation.goBack
           : () => Alert.alert('Cannot go back')
       }
-      style={onPress ? styles.containerRight : styles.containerLeft}
+      style={[
+        onPress ? styles.containerRight : styles.containerLeft,
+        otherProps.style,
+      ]}
       {...otherProps}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={[styles.text, textStyle]}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -35,7 +40,7 @@ const HeaderButton = ({ title, onPress, ...otherProps }: Props) => {
 export default HeaderButton;
 
 const styles = StyleSheet.create({
-  text: { color: COLORS.PRIMARY, fontWeight: 'bold', fontFamily: FONT.BOLD },
+  text: { color: COLORS.PRIMARY, fontFamily: FONT.MEDIUM },
   containerRight: { marginRight: 16 },
   containerLeft: { marginLeft: 16 },
 });

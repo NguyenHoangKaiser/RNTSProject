@@ -16,6 +16,7 @@ const FONT = {
   REGULAR: 'Inter-Regular',
   BOLD: 'Inter-Bold',
   LIGHT: 'Inter-Light',
+  SEMI: 'Inter-SemiBold',
 };
 
 const theme = createTheme({
@@ -95,6 +96,20 @@ const theme = createTheme({
         fontWeight: '400',
         color: COLORS.GRAY_TEXT,
       },
+    },
+    Card: {
+      containerStyle: {
+        borderWidth: 0,
+        padding: 0,
+        elevation: 0,
+        marginHorizontal: 0,
+      },
+    },
+    Skeleton: {
+      style: {
+        borderRadius: 8,
+      },
+      animation: 'none',
     },
   },
 });
