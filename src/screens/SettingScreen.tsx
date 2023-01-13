@@ -8,13 +8,32 @@ import Container from '@components/Container';
 import Body from '@components/Body';
 import { COLORS } from '@config';
 import CustomTab from '@components/Tab';
-import { DATA } from './FeedScreen';
 import { ItemList } from '@components/Item';
+import { useAppSelector } from '@reduxCore/store/reduxHooks';
+import { selectAllPosts } from '@reduxCore/main/postsSlice';
+import { useGetAllPostsQuery, useGetPostQuery } from '@reduxCore/api/rtkApi';
+import { TPost } from '@reduxCore/types';
+
+// Empty array to be used as default value for postsArray, better reference than undefined
+const emptyArray: TPost[] = [];
 
 const SettingsScreen = () => {
   const navigation =
     useNavigation<HomeTabScreenProps<'Settings'>['navigation']>();
   const [tabIndex, setTabIndex] = useState(0);
+  const { data: postQueryData, isLoading, isFetching } = useGetPostQuery(1);
+  const postsState = useAppSelector(selectAllPosts);
+
+  const { postsQueryArray } = useGetAllPostsQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      postsQueryArray: data ?? emptyArray, // if data is undefined, return emptyArray
+    }),
+  });
+
+  const postsStateData = postsState.map((item) => ({
+    header: item.id.toString(),
+    content: item.title,
+  }));
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -44,6 +63,7 @@ const SettingsScreen = () => {
             size={148}
             rounded
             title="AV"
+            source={{ uri: 'https://randomuser.me/api/portraits/men/36.jpg' }}
             containerStyle={styles.avatarContainer}
           />
         </View>
@@ -52,24 +72,51 @@ const SettingsScreen = () => {
             <Text h3 style={styles.text}>
               Settings Screen
             </Text>
-            <Text>A mantra go here</Text>
+            {isLoading ? (
+              <Text>Loading...</Text>
+            ) : isFetching ? (
+              <Text>Fetching...</Text>
+            ) : (
+              <Text>{postQueryData?.title}</Text>
+            )}
           </View>
           <CustomTab
             indicatorTitle={['Posts', 'Photos']}
             activeValue={tabIndex}
             setActiveValue={setTabIndex}>
             <TabView.Item>
-              <ScrollView
-                overScrollMode="never"
-                contentContainerStyle={styles.scrollView}>
-                {DATA.map((item) => (
-                  <ItemList
-                    data={item}
-                    containerStyle={styles.itemContainer}
-                    key={item.header}
-                  />
-                ))}
-              </ScrollView>
+              {/* if isLoading is true, show postsStateData, else show
+              postsQueryArray */}
+              {isLoading ? (
+                <ScrollView
+                  overScrollMode="never"
+                  contentContainerStyle={styles.scrollView}>
+                  {postsStateData.map((item, index) => (
+                    <ItemList
+                      data={item}
+                      containerStyle={styles.itemContainer}
+                      key={`${item.header}_${index}`}
+                    />
+                  ))}
+                </ScrollView>
+              ) : (
+                <ScrollView
+                  overScrollMode="never"
+                  contentContainerStyle={styles.scrollView}>
+                  {postsQueryArray
+                    ?.map((item) => ({
+                      header: item.id.toString(),
+                      content: item.title,
+                    }))
+                    .map((item, index) => (
+                      <ItemList
+                        data={item}
+                        containerStyle={styles.itemContainer}
+                        key={`${item.header}_${index}`}
+                      />
+                    ))}
+                </ScrollView>
+              )}
             </TabView.Item>
             <TabView.Item>
               <Text h1>Photos</Text>

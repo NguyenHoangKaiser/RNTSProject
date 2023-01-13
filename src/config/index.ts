@@ -1,5 +1,7 @@
 import { createTheme } from '@rneui/themed';
 
+const API_BASE = 'https://jsonplaceholder.typicode.com/';
+
 const COLORS = {
   PRIMARY: '#5DB075',
   SECONDARY: '#F4A460',
@@ -128,4 +130,4 @@ const theme = createTheme({
   },
 });
 
-export { COLORS, FONT, theme };
+export { COLORS, FONT, theme, API_BASE };

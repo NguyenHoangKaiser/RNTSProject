@@ -11,7 +11,12 @@ type Props = {
 const ItemList = ({ data, ...otherProps }: Props) => {
   return (
     <ListItem {...otherProps}>
-      <Avatar size={50} title="A" containerStyle={styles.avatarContainer} />
+      <Avatar
+        size={50}
+        title="A"
+        icon={{ name: 'pencil', type: 'font-awesome' }}
+        containerStyle={styles.avatarContainer}
+      />
       <ListItem.Content>
         <View style={styles.container}>
           <View style={styles.title}>

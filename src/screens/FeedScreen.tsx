@@ -3,9 +3,9 @@ import Container from '@components/Container';
 import HeaderButton from '@components/Header/HeaderButton';
 import { ItemList } from '@components/Item';
 import { useNavigation } from '@react-navigation/native';
-import { SearchBar, Skeleton } from '@rneui/themed';
+import { SearchBar, Image } from '@rneui/themed';
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
 import { HomeTabScreenProps } from 'src/navigators/types';
 
 export type ListData = {
@@ -56,6 +56,8 @@ export const DATA: ListData[] = [
   // },
 ];
 
+// const BASE_URI = 'https://source.unsplash.com/random?sig=';
+
 const FeedScreen = () => {
   const navigation = useNavigation<HomeTabScreenProps<'Feed'>['navigation']>();
   const [search, setSearch] = useState('');
@@ -98,7 +100,11 @@ const FeedScreen = () => {
               key={item.header}
             />
           ))}
-          <Skeleton height={240} />
+          <Image
+            source={{ uri: 'https://source.unsplash.com/random?sig=1' }}
+            containerStyle={styles.item}
+            PlaceholderContent={<ActivityIndicator style={styles.indicator} />}
+          />
         </ScrollView>
       </Body>
     </Container>
@@ -108,6 +114,8 @@ const FeedScreen = () => {
 export default FeedScreen;
 
 const styles = StyleSheet.create({
+  indicator: { height: '100%' },
+  item: { height: 240, width: '100%' },
   scrollView: { paddingBottom: 10 },
   itemContainer: { paddingHorizontal: 0 },
   flatList: { marginBottom: 10, flexGrow: 0 },

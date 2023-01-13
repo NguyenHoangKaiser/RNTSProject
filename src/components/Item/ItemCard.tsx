@@ -11,7 +11,7 @@ type Props = {
 const ItemCard = ({ data, ...otherProps }: Props) => {
   return (
     <ListItem {...otherProps}>
-      <Card containerStyle={{ width: '100%' }}>
+      <Card containerStyle={styles.cardContainer}>
         <Skeleton height={240} />
         <Text style={styles.header}>Header {data.header}</Text>
         <Text style={styles.content}>{data.content}</Text>
@@ -24,6 +24,7 @@ const ItemCard = ({ data, ...otherProps }: Props) => {
 export default ItemCard;
 
 const styles = StyleSheet.create({
+  cardContainer: { width: '100%' },
   subText: { fontSize: 14, color: COLORS.GRAY_TEXT },
   content: { fontSize: 14, marginVertical: 4 },
   header: { fontWeight: 'bold', marginTop: 4 },

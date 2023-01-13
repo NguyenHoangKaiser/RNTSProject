@@ -25,12 +25,9 @@ const CustomTab = ({
           value={activeValue}
           onChange={(e) => setActiveValue(e)}
           buttonStyle={styles.tabButton}
-          containerStyle={(active) => ({
-            backgroundColor: active ? 'white' : COLORS.GRAY_BG_INPUT,
-            borderWidth: 1,
-            borderRadius: 30,
-            borderColor: COLORS.GRAY_BG_INPUT,
-          })}
+          containerStyle={(active) =>
+            active ? styles.activeContainer : styles.inActiveContainer
+          }
           indicatorStyle={styles.tabIndicator}>
           {indicatorTitle.map((title, index) => (
             <Tab.Item title={title} titleStyle={styles.tabTitle} key={index} />
@@ -50,6 +47,20 @@ const CustomTab = ({
 export default CustomTab;
 
 const styles = StyleSheet.create({
+  activeContainer: {
+    backgroundColor: 'white',
+    borderWidth: 2,
+    borderTopWidth: 1,
+    borderRadius: 30,
+    borderColor: COLORS.GRAY_BG_INPUT,
+  },
+  inActiveContainer: {
+    backgroundColor: COLORS.GRAY_BG_INPUT,
+    borderWidth: 2,
+    borderTopWidth: 1,
+    borderRadius: 30,
+    borderColor: COLORS.GRAY_BG_INPUT,
+  },
   container: { width: '100%', height: '100%' },
   tabButton: { height: 50 },
   tabTitle: {
