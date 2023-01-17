@@ -38,6 +38,7 @@ export type BottomTabNavigatorParamList = {
   Detail: { title: string };
   Settings: { title: string };
   Feed: { name: string };
+  Profile: undefined;
 };
 
 /**

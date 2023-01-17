@@ -8,6 +8,7 @@ import { BottomTabNavigatorParamList } from '../types';
 import DetailScreen from '@screens/DetailScreen';
 import FeedScreen from '@screens/FeedScreen';
 import { FONT } from '@config';
+import ProfileScreen from '@screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator<BottomTabNavigatorParamList>();
 
@@ -39,6 +40,9 @@ const BottomTabs = () => {
             case 'Feed':
               iconName = focused ? 'ios-home' : 'ios-home-outline';
               break;
+            case 'Profile':
+              iconName = focused ? 'ios-person' : 'ios-person-outline';
+              break;
             default:
               break;
           }
@@ -63,6 +67,11 @@ const BottomTabs = () => {
         name="Settings"
         component={SettingsScreen}
         initialParams={{ title: 'Default' }} // default parameters before navigation
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ headerShown: false }}
       />
     </Tab.Navigator>
   );

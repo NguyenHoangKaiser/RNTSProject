@@ -1,18 +1,19 @@
+import Body from '@components/Body';
+import BottomDrawer from '@components/BottomDrawer';
+import Container from '@components/Container';
+import HeaderButton from '@components/Header/HeaderButton';
+import { ItemList } from '@components/Item';
+import CustomTab from '@components/Tab';
+import { COLORS, FONT } from '@config';
+import { useNavigation } from '@react-navigation/native';
+import { useGetAllPostsQuery, useGetPostQuery } from '@reduxCore/api/rtkApi';
+import { selectAllPosts } from '@reduxCore/main/postsSlice';
+import { useAppSelector } from '@reduxCore/store/reduxHooks';
+import { TPost } from '@reduxCore/types';
+import { Avatar, Button, TabView, Text } from '@rneui/themed';
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Avatar, TabView, Text } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
 import { HomeTabScreenProps } from 'src/navigators/types';
-import HeaderButton from '@components/Header/HeaderButton';
-import Container from '@components/Container';
-import Body from '@components/Body';
-import { COLORS } from '@config';
-import CustomTab from '@components/Tab';
-import { ItemList } from '@components/Item';
-import { useAppSelector } from '@reduxCore/store/reduxHooks';
-import { selectAllPosts } from '@reduxCore/main/postsSlice';
-import { useGetAllPostsQuery, useGetPostQuery } from '@reduxCore/api/rtkApi';
-import { TPost } from '@reduxCore/types';
 
 // Empty array to be used as default value for postsArray, better reference than undefined
 const emptyArray: TPost[] = [];
@@ -21,6 +22,7 @@ const SettingsScreen = () => {
   const navigation =
     useNavigation<HomeTabScreenProps<'Settings'>['navigation']>();
   const [tabIndex, setTabIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
   const { data: postQueryData, isLoading, isFetching } = useGetPostQuery(1);
   const postsState = useAppSelector(selectAllPosts);
 
@@ -47,7 +49,7 @@ const SettingsScreen = () => {
         <HeaderButton
           title="Logout"
           textStyle={styles.headerText}
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => setIsVisible(true)}
         />
       ),
     });
@@ -67,6 +69,7 @@ const SettingsScreen = () => {
             containerStyle={styles.avatarContainer}
           />
         </View>
+
         <Body style={styles.body}>
           <View style={styles.titleContainer}>
             <Text h3 style={styles.text}>
@@ -80,6 +83,7 @@ const SettingsScreen = () => {
               <Text>{postQueryData?.title}</Text>
             )}
           </View>
+
           <CustomTab
             indicatorTitle={['Posts', 'Photos']}
             activeValue={tabIndex}
@@ -122,6 +126,29 @@ const SettingsScreen = () => {
               <Text h1>Photos</Text>
             </TabView.Item>
           </CustomTab>
+
+          <BottomDrawer setVisible={setIsVisible} isVisible={isVisible}>
+            <Text style={styles.drawerTitle}>Logout</Text>
+            <Text style={styles.drawerText}>
+              Are you sure you want to logout?
+            </Text>
+            <Text style={styles.drawerText}>
+              You will need to login again to access your account.
+            </Text>
+            <Button
+              title="Log me out"
+              size="lg"
+              containerStyle={styles.drawerButton}
+              onPress={() => navigation.navigate('Login')}
+            />
+            <Button
+              title="Cancel"
+              size="lg"
+              type="clear"
+              titleStyle={styles.drawerSecondaryAction}
+              onPress={() => setIsVisible(false)}
+            />
+          </BottomDrawer>
         </Body>
       </Container>
     </>
@@ -131,6 +158,13 @@ const SettingsScreen = () => {
 export default SettingsScreen;
 
 const styles = StyleSheet.create({
+  drawerSecondaryAction: { fontFamily: FONT.SEMI, fontSize: 16 },
+  drawerButton: {
+    width: '100%',
+    marginTop: 16,
+  },
+  drawerText: { textAlign: 'center', color: COLORS.GRAY_TEXT },
+  drawerTitle: { fontSize: 24, fontFamily: FONT.MEDIUM, marginBottom: 12 },
   scrollView: { paddingBottom: 100 },
   itemContainer: { paddingHorizontal: 0 },
   titleContainer: {
